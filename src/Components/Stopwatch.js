@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { FormModal } from "./FormModal";
 
-export const Stopwatch = ({ onStopWatch, updateStopwatchTimer }) => {
+export const Stopwatch = ({ onStopWatch, updateStopwatchTimer, onSave }) => {
   const [start, setStart] = useState(false);
   const [pause, setPause] = useState(false);
   const [time, setTime] = useState("");
+  const [modal, setModal] = useState(false);
 
   const timer = () => {
     let stopwatchTimer = onStopWatch;
@@ -53,22 +55,28 @@ export const Stopwatch = ({ onStopWatch, updateStopwatchTimer }) => {
     setPause(true);
   };
 
+  const saveButton = () => {
+    setModal(true);
+  };
+
   useEffect(() => {
-    const stopwatchInterval = setTimeout(() => {
+    const timerInterval = setTimeout(() => {
       if (start && !pause) {
         timer();
       }
     }, 1000);
 
-    const interval = setTimeout(() => {
+    const updateTimerInterval = setTimeout(() => {
       updateTime();
     }, 1000);
 
     return () => {
-      clearTimeout(interval);
-      clearTimeout(stopwatchInterval);
+      clearTimeout(timerInterval);
+      clearTimeout(updateTimerInterval);
     };
-  });
+  }, [time, onStopWatch]);
+
+  //   const { hh, mm, ss } = onStopWatch;
 
   return (
     <>
@@ -83,8 +91,16 @@ export const Stopwatch = ({ onStopWatch, updateStopwatchTimer }) => {
         <button onClick={pauseButton} disabled={pause}>
           Pause
         </button>
-        <button>Save</button>
+        <button onClick={saveButton}>Save</button>
       </div>
+
+      {modal ? (
+        <FormModal
+          onStopWatch={onStopWatch}
+          setModal={setModal}
+          onSave={onSave}
+        />
+      ) : null}
     </>
   );
 };
