@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { FormModal } from "./FormModal";
+import "./Stopwatch.css";
 
-export const Stopwatch = ({ onStopWatch, updateStopwatchTimer, onSave }) => {
+export const Stopwatch = ({
+  onStopWatch,
+  updateStopwatchTimer,
+  saveButton,
+}) => {
   const [start, setStart] = useState(false);
   const [pause, setPause] = useState(false);
   const [time, setTime] = useState("");
-  const [modal, setModal] = useState(false);
 
   const timer = () => {
     let stopwatchTimer = onStopWatch;
@@ -55,10 +58,6 @@ export const Stopwatch = ({ onStopWatch, updateStopwatchTimer, onSave }) => {
     setPause(true);
   };
 
-  const saveButton = () => {
-    setModal(true);
-  };
-
   useEffect(() => {
     const timerInterval = setTimeout(() => {
       if (start && !pause) {
@@ -76,31 +75,60 @@ export const Stopwatch = ({ onStopWatch, updateStopwatchTimer, onSave }) => {
     };
   }, [time, onStopWatch]);
 
-  //   const { hh, mm, ss } = onStopWatch;
+  const { hh, mm, ss } = onStopWatch;
 
   return (
     <>
-      <div>{time}</div>
-      <div>
-        {onStopWatch.hh + " : " + onStopWatch.mm + " : " + onStopWatch.ss}
-      </div>
-      <div>
-        <button onClick={startButton} disabled={start}>
-          Start
-        </button>
-        <button onClick={pauseButton} disabled={pause}>
-          Pause
-        </button>
-        <button onClick={saveButton}>Save</button>
-      </div>
+      <div className="container">
+        <h1>
+          Time Tracking <br />
+          Stop Watch
+        </h1>
+        <div className="shadow">
+          <div>
+            {" "}
+            <div className="time">{time}</div>
+            <div id="time">
+              <span className="digit" id="hr">
+                {hh}
+                <span className="txt">Hr</span>:
+              </span>
 
-      {modal ? (
-        <FormModal
-          onStopWatch={onStopWatch}
-          setModal={setModal}
-          onSave={onSave}
-        />
-      ) : null}
+              <span className="digit" id="min">
+                {mm}
+                <span className="txt">Min</span>:
+              </span>
+
+              <span className="digit" id="sec">
+                {ss}
+              </span>
+              <span className="txt">Sec</span>
+            </div>
+          </div>
+
+          <div className="buttons">
+            <button
+              className="btn"
+              id={start ? "disableButton" : "start"}
+              onClick={startButton}
+              disabled={start}
+            >
+              Start
+            </button>
+            <button
+              className="btn"
+              id={pause ? "disableButton" : "stop"}
+              onClick={pauseButton}
+              disabled={pause}
+            >
+              Pause
+            </button>
+            <button className="btn" id="save" onClick={saveButton}>
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

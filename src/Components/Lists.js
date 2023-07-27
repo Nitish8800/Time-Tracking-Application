@@ -1,28 +1,37 @@
-export const Lists = ({ lists, setLists }) => {
+import "./Stopwatch.css";
+
+export const Lists = ({ lists, setLists, setModal }) => {
   const onClear = () => {
     setLists([]);
   };
 
   return (
-    <div className="tasks br-12">
-      <div className="tasks-header">
-        <h3>Lists</h3>
-        <button className="clear-tasks-btn br-4" onClick={onClear}>
-          Clear All
-        </button>
-      </div>
-
-      {lists.map((data, i) => (
-        <div className="task br-8">
-        {/* <button onClick={}>X</button> */}
-          <h6>{data?.title}</h6>
-          <p>{data?.description}</p>
-          <h4>
-            <span className="time-taken-label"> Time Taken : </span>
-            {data?.totalTime.hh} : {data?.totalTime.mm} : {data?.totalTime.ss}
-          </h4>
+    <>
+      <div className="shadow container contain">
+        <div className="listData">
+          <h3>List Task Data</h3>
+          <button className="clearAll" onClick={onClear}>
+            Clear All
+          </button>
         </div>
-      ))}
-    </div>
+        {lists?.map((data, i) => (
+          <div className="taskList">
+            <h4>
+              Title ~ <span>{data?.title}</span>
+            </h4>
+            <h4>
+              Time Taken ~ &nbsp;
+              <span>
+                {data?.totalTime.hh} : {data?.totalTime.mm} :{" "}
+                {data?.totalTime.ss}{" "}
+              </span>
+            </h4>
+            <h4>
+              Description ~ <span>{data?.description}</span>
+            </h4>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };

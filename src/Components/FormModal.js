@@ -8,15 +8,16 @@ export const FormModal = ({ onStopWatch, setModal, onSave }) => {
     setModal(false);
   };
 
-  const clearAndCloseModal = () => {
+  const CloseModal = () => {
     setFormTitle("");
     setFormDescription("");
     onCancel();
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <>
+      <div className="modal">
+        <h2>Save The Task</h2>
         <form action="">
           <label htmlFor="">Title</label>
           <input
@@ -38,10 +39,20 @@ export const FormModal = ({ onStopWatch, setModal, onSave }) => {
               setFormDescription(event.target.value);
             }}
           ></textarea>
-
-          <div className="modal-btns">
+          <div className="buttons">
+            <button
+              id="stop"
+              className="btn"
+              onClick={(event) => {
+                event.preventDefault();
+                CloseModal();
+              }}
+            >
+              cancel
+            </button>
             <button
               className="btn"
+              id="save"
               onClick={(event) => {
                 event.preventDefault();
                 if (formTitle && formDescription) {
@@ -51,24 +62,15 @@ export const FormModal = ({ onStopWatch, setModal, onSave }) => {
                     totalTime: { ...onStopWatch },
                   };
                   onSave(data);
-                  clearAndCloseModal();
+                  CloseModal();
                 }
               }}
             >
               Save
             </button>
-            <button
-              className="btn"
-              onClick={(event) => {
-                event.preventDefault();
-                clearAndCloseModal();
-              }}
-            >
-              cancel
-            </button>
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
