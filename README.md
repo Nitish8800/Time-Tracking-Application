@@ -1,5 +1,6 @@
-🤩 Features
-There are two sections
+#🤩 Features :
+
+##There are two sections
 1. Timer Section
 2. Tasks Section
 ⏰ Timer Section
