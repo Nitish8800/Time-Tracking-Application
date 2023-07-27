@@ -4,14 +4,10 @@ export const FormModal = ({ onStopWatch, setModal, onSave }) => {
   const [formTitle, setFormTitle] = useState("");
   const [formDescription, setFormDescription] = useState("");
 
-  const onCancel = () => {
-    setModal(false);
-  };
-
   const CloseModal = () => {
     setFormTitle("");
     setFormDescription("");
-    onCancel();
+    setModal(false);
   };
 
   return (
@@ -26,25 +22,26 @@ export const FormModal = ({ onStopWatch, setModal, onSave }) => {
             onInput={(event) => {
               setFormTitle(event.target.value);
             }}
+            required
           />
 
           <label htmlFor="">Description</label>
           <textarea
             name=""
             id=""
-            cols="30"
-            rows="10"
+            rows="12"
             value={formDescription}
             onInput={(event) => {
               setFormDescription(event.target.value);
             }}
-          ></textarea>
+            required
+          />
           <div className="buttons">
             <button
               id="stop"
               className="btn"
-              onClick={(event) => {
-                event.preventDefault();
+              onClick={(e) => {
+                e.preventDefault();
                 CloseModal();
               }}
             >
@@ -53,8 +50,8 @@ export const FormModal = ({ onStopWatch, setModal, onSave }) => {
             <button
               className="btn"
               id="save"
-              onClick={(event) => {
-                event.preventDefault();
+              onClick={(e) => {
+                e.preventDefault();
                 if (formTitle && formDescription) {
                   let data = {
                     title: formTitle,
